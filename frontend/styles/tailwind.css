@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body {
+    background-color: #303040;
+    font-family: sans-serif;
+}
+
+.googlelogin-button {
+    padding: 15px;
+
+}
+
+#lname {
+    border: 2px solid white;
+}
+
+.placeholder-white::placeholder {
+    color: grey;
+    text-align: center;
+}
+
+p {
+    position: relative;
+}
+
+.line::before,
+.line::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 220px;
+    height: 1px;
+    background-color: white;
+}
+
+.line::before {
+    left: 0;
+    margin-left: -250px;
+}
+
+.line::after {
+    right: 0;
+    margin-right: -250px;
+}
+
+div {
+    border: 1px solid grey;
+    font-family: sans-serif;
+}
