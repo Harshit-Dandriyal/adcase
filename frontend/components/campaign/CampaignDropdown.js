@@ -30,7 +30,7 @@ const CampaignDropdownMenu = ({ campaigns }) => {
                     className="w-full"
                     onClick={() => handleRouteChange(campaign.id)}
                   >
-                    <div className="flex items-center">
+                    <div className="flex items-center border-none">
                       <ArrowSVG />
                       <p className="ml-2 mt-1">{campaign.title}</p>
                     </div>
