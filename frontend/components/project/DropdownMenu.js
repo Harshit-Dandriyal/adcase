@@ -3,36 +3,35 @@ import ArrowSVG from "../ArrowSVG";
 import { useRouter } from "next/router";
 
 const DropdownMenu = ({ categories }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+
   const handleRouteChange = (id) => {
     router.push(`/campaign/${id}`);
   };
+
   return (
     <div className="w-full">
       <ul className="menu menu-xs bg-base-200 rounded-lg max-w-xs w-full">
         <li>
-          <details open={true} onToggle={() => setIsOpen(!isOpen)}>
-            <summary>
+          <details open={isOpen} onToggle={() => setIsOpen(!isOpen)}>
+            <summary className="flex items-center">
               <ArrowSVG />
-              Projects
+              <span>Projects</span>
             </summary>
-
             <ul>
               {categories.map((category) => (
-                <div className="border-none">
+                <li key={category.id} className="border-none">
                   <button
-                    className=" w-full"
+                    className="w-full"
                     onClick={() => handleRouteChange(category.id)}
                   >
-                    <li>
-                      <a>
-                        <ArrowSVG />
-                        {category.title}
-                      </a>
-                    </li>
+                    <div className="flex items-center border-none">
+                      <ArrowSVG />
+                      <span>{category.title}</span>
+                    </div>
                   </button>
-                </div>
+                </li>
               ))}
             </ul>
           </details>
@@ -43,5 +42,3 @@ const DropdownMenu = ({ categories }) => {
 };
 
 export default DropdownMenu;
-
-// Rest of the code ...

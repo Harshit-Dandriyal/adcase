@@ -5,44 +5,42 @@ import { useRouter } from "next/router";
 const AdGroupDropdownMenu = ({ groups }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+
   const handleRouteChange = (id) => {
     router.push(`/keywords/${id}`);
   };
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <div className={`w-full ${isOpen ? "overflow-y-scroll" : ""}`}>
-      <div>
-        <ul className="menu menu-xs bg-base-200 rounded-lg max-w-xs w-full">
-          <li>
-            <details open={true} onToggle={handleToggle}>
-              <summary>
-                <ArrowSVG />
-                AdGroups
-              </summary>
-
-              <ul>
-                {groups.map((group) => (
-                  <div className="border-none  ">
-                    <button
-                      className=" w-full"
-                      onClick={() => handleRouteChange(group.id)}
-                    >
-                      <li>
-                        <a>
-                          <ArrowSVG />
-                          {group.title}
-                        </a>
-                      </li>
-                    </button>
-                  </div>
-                ))}
-              </ul>
-            </details>
-          </li>
-        </ul>
-      </div>
+      <ul className="menu menu-xs bg-base-200 rounded-lg max-w-xs w-full">
+        <li>
+          <details open={isOpen} onToggle={handleToggle}>
+            <summary className="flex items-center">
+              <ArrowSVG />
+              <span>AdGroups</span>
+            </summary>
+            <ul>
+              {groups.map((group) => (
+                <li key={group.id} className="border-none">
+                  <button
+                    className=" w-full"
+                    onClick={() => handleRouteChange(group.id)}
+                  >
+                    <div className="flex items-center border-none">
+                      <ArrowSVG />
+                      <span>{group.title}</span>
+                    </div>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </details>
+        </li>
+      </ul>
     </div>
   );
 };

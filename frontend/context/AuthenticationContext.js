@@ -28,7 +28,7 @@ export const AuthenticationProvider = ({ children }) => {
 
     try {
       const { data: accessResponse } = await axios.post(
-        "https://adcase-ten.vercel.app/api/login",
+        "http://localhost:3000/api/login",
         body,
         config
       );

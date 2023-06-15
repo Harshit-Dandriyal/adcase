@@ -1,41 +1,37 @@
 import React, { useState } from "react";
 import ArrowSVG from "../ArrowSVG";
-import { useRouter } from "next/router";
 
 const KeyWordDropdownMenu = ({ keywords }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <div className={`w-full ${isOpen ? "overflow-y-scroll" : ""}`}>
-      <div>
-        <ul className="menu menu-xs bg-base-200 rounded-lg max-w-xs w-full">
-          <li>
-            <details open={true} onToggle={handleToggle}>
-              <summary>
-                <ArrowSVG />
-                KeyWords
-              </summary>
-
-              <ul>
-                {keywords.map((keyword) => (
-                  <div className="border-none  ">
-                    <button className=" w-full">
-                      <li>
-                        <a>
-                          <ArrowSVG />
-                          {keyword.title}
-                        </a>
-                      </li>
-                    </button>
-                  </div>
-                ))}
-              </ul>
-            </details>
-          </li>
-        </ul>
-      </div>
+      <ul className="menu menu-xs bg-base-200 rounded-lg max-w-xs w-full">
+        <li>
+          <details open={isOpen} onToggle={handleToggle}>
+            <summary className="flex items-center">
+              <ArrowSVG />
+              <span>KeyWords</span>
+            </summary>
+            <ul>
+              {keywords.map((keyword) => (
+                <li key={keyword.id} className="border-none">
+                  <button className="w-full">
+                    <div className="flex items-center border-none">
+                      <ArrowSVG />
+                      <span>{keyword.title}</span>
+                    </div>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </details>
+        </li>
+      </ul>
     </div>
   );
 };
