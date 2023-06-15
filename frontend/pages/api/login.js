@@ -31,8 +31,8 @@ export default async (req, res) => {
       res.setHeader(
         "Set-Cookie",
         cookie.serialize("access", accessResponse.access, {
-          httpOnly: true,
-          secure: true,
+          httpOnly: false,
+          secure: false,
           sameSite: "strict",
           maxAge: 60 * 60 * 24,
           path: "/",

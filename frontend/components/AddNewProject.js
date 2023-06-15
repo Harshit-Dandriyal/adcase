@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 const AddNewProject = () => {
   const [title, setTitle] = useState();
   const [mainurl, setMainUrl] = useState();
@@ -10,6 +11,7 @@ const AddNewProject = () => {
     e.preventDefault();
     setLoading(true);
     const access = Cookies.get("access");
+    console.log("san" + access);
     const config = {
       headers: {
         Authorization: "Bearer " + access,
@@ -29,6 +31,7 @@ const AddNewProject = () => {
       );
       console.log("Success:", response);
       setLoading(false);
+      window.location.reload();
       // After the project is successfully created, you can redirect to another page or give a success message.
     } catch (error) {
       console.error("Error:", error);
