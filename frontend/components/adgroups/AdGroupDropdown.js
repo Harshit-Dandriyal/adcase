@@ -21,7 +21,7 @@ const AdGroupDropdownMenu = ({ groups }) => {
           <details open={isOpen} onToggle={handleToggle}>
             <summary className="flex items-center">
               <ArrowSVG />
-              <span>AdGroups</span>
+              <span className="ml-2">AdGroups</span>
             </summary>
             <ul>
               {groups.map((group) => (

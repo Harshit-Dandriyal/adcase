@@ -15,7 +15,7 @@ const KeyWordDropdownMenu = ({ keywords }) => {
           <details open={isOpen} onToggle={handleToggle}>
             <summary className="flex items-center">
               <ArrowSVG />
-              <span>KeyWords</span>
+              <span className="ml-2">KeyWords</span>
             </summary>
             <ul>
               {keywords.map((keyword) => (

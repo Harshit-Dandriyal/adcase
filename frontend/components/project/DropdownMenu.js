@@ -17,7 +17,7 @@ const DropdownMenu = ({ categories }) => {
           <details open={isOpen} onToggle={() => setIsOpen(!isOpen)}>
             <summary className="flex items-center">
               <ArrowSVG />
-              <span>Projects</span>
+              <span className="ml-2">Projects</span>
             </summary>
             <ul>
               {categories.map((category) => (
