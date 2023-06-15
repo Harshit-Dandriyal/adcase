@@ -28,7 +28,7 @@ const DropdownMenu = ({ categories }) => {
                   >
                     <div className="flex items-center border-none">
                       <ArrowSVG />
-                      <span>{category.title}</span>
+                      <p className="ml-2 mt-1"> {category.title}</p>
                     </div>
                   </button>
                 </li>

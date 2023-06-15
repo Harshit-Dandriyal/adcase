@@ -32,7 +32,7 @@ const CampaignDropdownMenu = ({ campaigns }) => {
                       <li>
                         <a>
                           <ArrowSVG />
-                          {campaign.title}
+                          <p className="ml-2 mt-1"> {campaign.title}</p>
                         </a>
                       </li>
                     </button>

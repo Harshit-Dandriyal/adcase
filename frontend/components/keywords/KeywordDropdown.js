@@ -23,7 +23,7 @@ const KeyWordDropdownMenu = ({ keywords }) => {
                   <button className="w-full">
                     <div className="flex items-center border-none">
                       <ArrowSVG />
-                      <span>{keyword.title}</span>
+                      <p className="ml-2 mt-1">{keyword.title}</p>
                     </div>
                   </button>
                 </li>

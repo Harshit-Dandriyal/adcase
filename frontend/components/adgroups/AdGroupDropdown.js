@@ -32,7 +32,7 @@ const AdGroupDropdownMenu = ({ groups }) => {
                   >
                     <div className="flex items-center border-none">
                       <ArrowSVG />
-                      <span>{group.title}</span>
+                      <p className="ml-2 mt-1">{group.title}</p>
                     </div>
                   </button>
                 </li>
