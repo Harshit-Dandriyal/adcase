@@ -62,7 +62,7 @@ const KeyWordPage = ({ categories, campaigns, keywords }) => {
               <>
                 <KeyWordHeader />
                 <div className="flex h-[89%] w-full flex-col">
-                  <div className="flex  flex-col">
+                  <div className="flex  flex-col overflow-y-scroll">
                     {keywords.map((keyword) => (
                       <>
                         <KeyWordColumn keyword={keyword} />

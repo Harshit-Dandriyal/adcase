@@ -61,8 +61,8 @@ const page = ({ categories }) => {
             {projectModal ? (
               <>
                 <TableHeader />
-                <div className="flex h-[89%] w-full flex-col">
-                  <div className="flex h-[60%] flex-col">
+                <div className="flex h-[89%] w-full flex-col ">
+                  <div className="flex h-[60%] flex-col overflow-y-scroll">
                     {categories.map((category) => (
                       <>
                         <MainTableColumn category={category} />
