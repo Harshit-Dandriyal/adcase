@@ -8,6 +8,7 @@ import AdGroupHeader from "../../components/adgroups/AdGroupHeader";
 import AddNewProject from "../../components/AddNewProject";
 const AdGroupPage = ({ categories, groups, keywords }) => {
   const [projectModal, setProjectModal] = useState(true);
+  const projectId = localStorage.getItem("projectId");
   return (
     <div className=" h-[100vh] flex ">
       <AdGroupSidebar categories={categories} groups={groups} />
@@ -16,7 +17,7 @@ const AdGroupPage = ({ categories, groups, keywords }) => {
           <button
             className="flex h-10 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
             onClick={() => {
-              setProjectModal(!projectModal);
+              window.location.href = `https://resonant-petal-379617.ew.r.appspot.com/exporter/get-csv/?site_id=${projectId}`;
             }}
           >
             {" "}

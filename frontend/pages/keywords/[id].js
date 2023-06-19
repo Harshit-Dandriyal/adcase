@@ -9,6 +9,7 @@ import KeyWordColumn from "../../components/keywords/KeywordColumn";
 import AddNewProject from "../../components/AddNewProject";
 const KeyWordPage = ({ categories, campaigns, keywords }) => {
   const [projectModal, setProjectModal] = useState(true);
+  const projectId = localStorage.getItem("projectId");
   return (
     <div className=" h-[100vh] flex ">
       <KeyWordSidebar categories={categories} keywords={keywords} />
@@ -17,7 +18,7 @@ const KeyWordPage = ({ categories, campaigns, keywords }) => {
           <button
             className="flex h-10 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
             onClick={() => {
-              setProjectModal(!projectModal);
+              window.location.href = `https://resonant-petal-379617.ew.r.appspot.com/exporter/get-csv/?site_id=${projectId}`;
             }}
           >
             Download .csv
