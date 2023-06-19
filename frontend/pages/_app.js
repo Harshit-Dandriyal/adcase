@@ -1,3 +1,4 @@
+// _app.js
 import { useEffect } from "react";
 import "../styles/tailwind.css";
 import { AuthenticationProvider } from "../context/AuthenticationContext";

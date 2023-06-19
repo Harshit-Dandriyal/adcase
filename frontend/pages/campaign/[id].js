@@ -7,20 +7,20 @@ import axios from "axios";
 import CampaignSidebar from "../../components/campaign/CampaignSidebar";
 import AddNewProject from "../../components/AddNewProject";
 const CategoryPage = ({ categories, campaigns, keywords }) => {
-  const [projectModal, setProjectModal] = useState(true);
+  const projectId = localStorage.getItem("projectId");
   return (
     <div className=" h-[100vh] flex ">
       <CampaignSidebar categories={categories} campaigns={campaigns} />
       <div className="w-5/6 flex flex-col">
         <div className="flex h-[10%] w-[97%] justify-end items-center gap-5 mr-5">
           <button
-            className="flex h-10 bg-green-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
+            className="flex h-10 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
             onClick={() => {
-              setProjectModal(!projectModal);
+              window.location.href = `https://resonant-petal-379617.ew.r.appspot.com/exporter/get-csv/?site_id=${projectId}`;
             }}
           >
             {" "}
-            + Create new project
+            Download .csv
           </button>
           <div className="dropdown dropdown-bottom dropdown-end">
             <label tabIndex={0} className=" m-1 p-0 block"></label>
@@ -58,22 +58,18 @@ const CategoryPage = ({ categories, campaigns, keywords }) => {
                 - Remove
               </button>
             </div>
-            {projectModal ? (
-              <>
-                <CampaignHeader />
-                <div className="flex  w-full flex-col overflow-y-scroll">
-                  <div className="flex flex-col">
-                    {campaigns.map((campaign) => (
-                      <>
-                        <CampaignColumn campaign={campaign} />
-                      </>
-                    ))}
-                  </div>
+            <>
+              <CampaignHeader />
+              <div className="flex  w-full flex-col overflow-y-scroll">
+                <div className="flex flex-col">
+                  {campaigns.map((campaign) => (
+                    <>
+                      <CampaignColumn campaign={campaign} />
+                    </>
+                  ))}
                 </div>
-              </>
-            ) : (
-              <AddNewProject />
-            )}
+              </div>
+            </>
           </div>
           <div className="flex w-[20%] h-full"></div>
         </div>

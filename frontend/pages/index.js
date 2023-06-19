@@ -1,10 +1,12 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import Link from "next/link";
 import AuthenticationContext from "../context/AuthenticationContext";
 import { useRouter } from "next/router";
+import { withUnauth } from "../hoc/unauth";
+import Cookies from "js-cookie";
 
-export default function SignIn() {
+function SignIn() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const router = useRouter();
@@ -14,6 +16,10 @@ export default function SignIn() {
     await login({ email, password });
     router.push("/main");
   };
+  useEffect(() => {
+    // Remove the access token from the cookie
+    Cookies.remove("access"); // Make sure to use the correct key for the cookie
+  }, []);
   return (
     <>
       {/*
@@ -118,3 +124,5 @@ export default function SignIn() {
     </>
   );
 }
+
+export default SignIn;

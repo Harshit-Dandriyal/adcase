@@ -5,6 +5,7 @@ import MainTableColumn from "../components/project/MainTableColumn";
 import cookie from "next-cookies";
 import axios from "axios";
 import AddNewProject from "../components/AddNewProject";
+import withAuth from "../hoc/main";
 const page = ({ categories }) => {
   const [projectModal, setProjectModal] = useState(true);
   return (

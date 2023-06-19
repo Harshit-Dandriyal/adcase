@@ -1,7 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import cookies from "next-cookies";
+import Cookies from "js-cookie";
 
 const AuthenticationContext = createContext();
 
@@ -11,7 +12,6 @@ export const AuthenticationProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const router = useRouter();
-
   // Login User
   const login = async ({ email, password }) => {
     const config = {
@@ -20,7 +20,6 @@ export const AuthenticationProvider = ({ children }) => {
         "Content-Type": "application/json",
       },
     };
-    console.log({ email, password });
     const body = {
       email,
       password,
@@ -32,7 +31,6 @@ export const AuthenticationProvider = ({ children }) => {
         body,
         config
       );
-      console.log("ada1", accessResponse);
       if (accessResponse && accessResponse.access) {
         setAccessToken(accessResponse.access);
 
@@ -54,14 +52,11 @@ export const AuthenticationProvider = ({ children }) => {
     } catch (error) {
       if (error.request) {
         setError("Something went wrong");
-        return;
       } else {
         setError("Something went wrong");
-        return;
       }
       console.error("Error", error.message);
       setError("Something went wrong");
-      return;
     }
   };
 
@@ -80,26 +75,18 @@ export const AuthenticationProvider = ({ children }) => {
 
     try {
       // call nextjs api function to create a user
-      await axios.post(
-        "https://adcase-ten.vercel.app/api/register",
-        body,
-        config
-      );
+      await axios.post("http://localhost:3000/api/register", body, config);
       login({ email, password });
     } catch (error) {
-      if (error.response & error.response.data) {
+      if (error.response && error.response.data) {
         setError(error.response.data.message);
-        return;
       } else if (error.request) {
         setError("Something went wrong");
-        return;
       } else {
         setError("Something went wrong");
-        return;
       }
       console.error("Error", error.message);
       setError("Something went wrong");
-      return;
     }
   };
 

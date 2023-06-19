@@ -7,6 +7,7 @@ const DropdownMenu = ({ categories }) => {
   const router = useRouter();
 
   const handleRouteChange = (id) => {
+    localStorage.setItem("projectId", id);
     router.push(`/campaign/${id}`);
   };
 

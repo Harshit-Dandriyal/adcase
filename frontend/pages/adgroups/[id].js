@@ -14,13 +14,13 @@ const AdGroupPage = ({ categories, groups, keywords }) => {
       <div className="w-5/6 flex flex-col">
         <div className="flex h-[10%] w-[97%] justify-end items-center gap-5 mr-5">
           <button
-            className="flex h-10 bg-green-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
+            className="flex h-10 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
             onClick={() => {
               setProjectModal(!projectModal);
             }}
           >
             {" "}
-            + Create new project
+            Download .csv
           </button>
           <div className="dropdown dropdown-bottom dropdown-end">
             <label tabIndex={0} className=" m-1 p-0 block"></label>
@@ -61,7 +61,7 @@ const AdGroupPage = ({ categories, groups, keywords }) => {
             {projectModal ? (
               <>
                 <AdGroupHeader />
-                <div className="flex h-[89%] w-full flex-col">
+                <div className="flex h-[89%] w-full flex-col overflow-y-scroll">
                   <div className="flex flex-col">
                     {groups.map((group) => (
                       <>
