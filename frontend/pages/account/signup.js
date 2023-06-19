@@ -3,17 +3,21 @@ import Image from "next/image";
 import AuthenticationContext from "../../context/AuthenticationContext";
 import { useRouter } from "next/router";
 
-// It's better to use a more descriptive name for the component. This is "SignupPage" instead of "page".
 const SignupPage = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const { register } = useContext(AuthenticationContext);
+  const { register, error } = useContext(AuthenticationContext); // Import 'error' from your context
   const router = useRouter();
-  const submitHandler = (e) => {
+
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    router.push("/");
-    register({ email, password });
+    try {
+      await register({ email, password }); // Await for the 'register' to complete
+      router.push("/"); // If register is successful, move to next page
+    } catch (err) {
+      console.log(err); // Log error for debugging, if needed
+    }
   };
   return (
     <>
@@ -78,6 +82,15 @@ const SignupPage = () => {
           </button>
         </div>
       </div>
+      {error && (
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-3"
+          role="alert"
+        >
+          <strong className="font-bold">Error:</strong>
+          <span className="block sm:inline"> {error}</span>
+        </div>
+      )}
     </>
   );
 };

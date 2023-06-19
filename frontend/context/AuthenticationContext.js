@@ -13,6 +13,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   const router = useRouter();
   // Login User
+  // Login User
   const login = async ({ email, password }) => {
     const config = {
       headers: {
@@ -59,7 +60,6 @@ export const AuthenticationProvider = ({ children }) => {
       setError("Something went wrong");
     }
   };
-
   const register = async ({ email, password }) => {
     const config = {
       headers: {
@@ -75,8 +75,19 @@ export const AuthenticationProvider = ({ children }) => {
 
     try {
       // call nextjs api function to create a user
-      await axios.post("http://localhost:3000/api/register", body, config);
-      login({ email, password });
+      const response = await axios.post(
+        "http://localhost:3000/api/register",
+        body,
+        config
+      );
+
+      if (response.status === 200) {
+        // Only try to login and redirect when the registration was successful
+        await login({ email, password });
+      } else {
+        // Handle error case
+        setError("Registration failed");
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         setError(error.response.data.message);
@@ -86,10 +97,8 @@ export const AuthenticationProvider = ({ children }) => {
         setError("Something went wrong");
       }
       console.error("Error", error.message);
-      setError("Something went wrong");
     }
   };
-
   return (
     <AuthenticationContext.Provider
       value={{ user, accessToken, error, login, register }}

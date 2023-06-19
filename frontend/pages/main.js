@@ -102,7 +102,14 @@ export default page;
 export async function getServerSideProps(context) {
   // Get the token from the cookie
   const { access } = cookie(context);
-
+  if (!access) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/", // your login route
+      },
+    };
+  }
   // Determine the value of `id` here. In this example, let's say `id` comes from the request params
   const id = context.params ? context.params.id : null; // Replace with the correct logic to obtain `id`
 
