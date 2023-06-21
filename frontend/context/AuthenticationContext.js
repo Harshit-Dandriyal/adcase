@@ -9,7 +9,10 @@ const AuthenticationContext = createContext();
 export const AuthenticationProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-  const [error, setError] = useState(null);
+  const [errorEmail, seterrorEmail] = useState(null);
+  const [errorPassword, seterrorPassword] = useState(null);
+  const [loginError, setLoginError] = useState(null);
+  const [loginEmailError, setLoginEmailError] = useState(null);
 
   const router = useRouter();
   // Login User
@@ -28,7 +31,7 @@ export const AuthenticationProvider = ({ children }) => {
 
     try {
       const { data: accessResponse } = await axios.post(
-        "https://adcase-ten.vercel.app/api/login",
+        "http://localhost:3000/api/login",
         body,
         config
       );
@@ -51,13 +54,19 @@ export const AuthenticationProvider = ({ children }) => {
 
       router.push("/main");
     } catch (error) {
-      if (error.request) {
-        setError("Something went wrong");
-      } else {
-        setError("Something went wrong");
-      }
-      console.error("Error", error.message);
-      setError("Something went wrong");
+      console.log("aaa", error?.response?.data);
+      console.log("qqq", error?.response?.data?.message?.detail);
+
+      setLoginError(
+        error?.response?.data.message.detail
+          ? error?.response?.data?.message?.detail
+          : null
+      );
+      setLoginEmailError(
+        error?.response?.data.message.error
+          ? error?.response?.data?.message?.error
+          : null
+      );
     }
   };
   const register = async ({ email, password }) => {
@@ -75,33 +84,42 @@ export const AuthenticationProvider = ({ children }) => {
 
     try {
       // call nextjs api function to create a user
+
       const response = await axios.post(
-        "https://adcase-ten.vercel.app/api/register",
+        "http://localhost:3000/api/signup",
         body,
         config
       );
+      router.push("/");
 
-      if (response.status === 200) {
-        // Only try to login and redirect when the registration was successful
-        await login({ email, password });
-      } else {
-        // Handle error case
-        setError("Registration failed");
-      }
+      // Clear error values after successful response
+      seterrorEmail(null);
+      seterrorPassword(null);
     } catch (error) {
-      if (error.response && error.response.data) {
-        setError(error.response.data.message);
-      } else if (error.request) {
-        setError("Something went wrong");
-      } else {
-        setError("Something went wrong");
-      }
-      console.error("Error", error.message);
+      seterrorEmail(
+        error?.response.data.message.email
+          ? error?.response?.data?.message?.email[0]
+          : null
+      );
+      seterrorPassword(
+        error?.response?.data.message.password
+          ? error?.response?.data?.message?.password[0]
+          : null
+      );
     }
   };
   return (
     <AuthenticationContext.Provider
-      value={{ user, accessToken, error, login, register }}
+      value={{
+        user,
+        accessToken,
+        errorEmail,
+        login,
+        register,
+        errorPassword,
+        loginError,
+        loginEmailError,
+      }}
     >
       {children}
     </AuthenticationContext.Provider>

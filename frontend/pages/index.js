@@ -10,7 +10,9 @@ function SignIn() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const router = useRouter();
-  const { login } = useContext(AuthenticationContext);
+  const { login, loginError, loginEmailError } = useContext(
+    AuthenticationContext
+  );
   const submitHandler = async (e) => {
     e.preventDefault();
     await login({ email, password });
@@ -114,12 +116,36 @@ function SignIn() {
             Not a member?{" "}
             <Link
               href="/account/signup"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-semibold leading-6 text-red-400 hover:text-indigo-500"
             >
-              Sign up here
+              <span className=" text-indigo-600 cursor-pointer">
+                Sign up here
+              </span>
             </Link>
           </p>
         </div>
+        {loginError && (
+          <div className="flex w-full justify-center border-none">
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-3 "
+              role="alert"
+            >
+              <strong className="font-bold">Error:</strong>
+              <span className="block sm:inline"> {loginError}</span>
+            </div>
+          </div>
+        )}
+        {loginEmailError && (
+          <div className="flex w-full justify-center border-none">
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-3 "
+              role="alert"
+            >
+              <strong className="font-bold">Error:</strong>
+              <span className="block sm:inline"> {loginEmailError}</span>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

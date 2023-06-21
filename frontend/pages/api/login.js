@@ -45,7 +45,9 @@ export default async (req, res) => {
         console.error(error.response.data);
         console.error(error.response.status);
         console.error(error.response.headers);
-        return res.status(401).json({ message: error.response.data.detail });
+        return res
+          .status(error.response.status)
+          .json({ message: error.response.data });
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import ArrowSVG from "../ArrowSVG";
 
+// Import your loading spinner component
+import Spinner from "../Spinner";
+
 const KeyWordDropdownMenu = ({ keywords }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // Add this line
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -10,7 +14,12 @@ const KeyWordDropdownMenu = ({ keywords }) => {
 
   return (
     <div className={`w-full ${isOpen ? "overflow-y-scroll" : ""}`}>
-      <ul className="menu menu-xs bg-base-200 rounded-lg max-w-xs w-full">
+      {loading && <Spinner />} {/* Display loading spinner when loading */}
+      <ul
+        className={`menu menu-xs bg-base-200 rounded-lg max-w-xs w-full ${
+          loading ? "pointer-events-none opacity-50" : ""
+        }`}
+      >
         <li>
           <details open={isOpen} onToggle={handleToggle}>
             <summary className="flex items-center">

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-const AddNewProject = () => {
+import { FaTimes } from "react-icons/fa";
+
+const AddNewProject = ({ projectModal, setProjectModal }) => {
   const [title, setTitle] = useState();
   const [mainurl, setMainUrl] = useState();
   const [loading, setLoading] = useState(false);
@@ -41,8 +43,21 @@ const AddNewProject = () => {
 
   return (
     <div className="flex justify-center items-center flex-col">
-      <div className="h-[50vh] w-full flex flex-col justify-center items-center">
-        <p className=" text-white text-4xl mb-10">Structure Creation</p>
+      <button
+        className="w-full"
+        onClick={() => {
+          setProjectModal(!projectModal);
+        }}
+      >
+        <FaTimes
+          size={40}
+          color={"white"}
+          className="mb-10 ml-auto mr-[9rem] mt-11 cursor-pointer w-12"
+        />
+      </button>
+      <div className="h-[50vh] w-full flex flex-col justify-center items-center border-none">
+        <p className=" text-white text-4xl mb-10">Structure Creation </p>
+
         <form
           className="flex flex-col justify-center items-center"
           action="#"

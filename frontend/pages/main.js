@@ -80,14 +80,22 @@ const page = ({ categories }) => {
                       By pressing the green button below you can create a new
                       project based on your URL of choise.
                     </p>
-                    <button className="flex h-10 bg-green-500 mt-6 justify-center items-center text-white rounded-full border-2 border-white  w-44">
+                    <button
+                      className="flex h-10 bg-green-500 mt-6 justify-center items-center text-white rounded-full border-2 border-white  w-44"
+                      onClick={() => {
+                        setProjectModal(!projectModal);
+                      }}
+                    >
                       + Create new project
                     </button>
                   </div>
                 </div>
               </>
             ) : (
-              <AddNewProject />
+              <AddNewProject
+                projectModal={projectModal}
+                setProjectModal={setProjectModal}
+              />
             )}
           </div>
           <div className="flex w-[20%] h-full"></div>

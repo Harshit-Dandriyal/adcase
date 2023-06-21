@@ -61,7 +61,7 @@ const CategoryPage = ({ categories, campaigns, keywords }) => {
             <>
               <CampaignHeader />
               <div className="flex  w-full flex-col overflow-y-scroll">
-                <div className="flex flex-col overflow-y-scroll">
+                <div className="flex flex-col ">
                   {campaigns.map((campaign) => (
                     <>
                       <CampaignColumn campaign={campaign} />
