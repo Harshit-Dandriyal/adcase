@@ -68,7 +68,7 @@ const SignupPage = () => {
             className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-3"
             role="alert"
           >
-            <strong className="font-bold">Error:</strong>
+            <strong className="font-bold">Email Error:</strong>
             <span className="block sm:inline"> {errorEmail}</span>
           </div>
         )}
@@ -77,7 +77,7 @@ const SignupPage = () => {
             className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-3"
             role="alert"
           >
-            <strong className="font-bold">Error:</strong>
+            <strong className="font-bold">Password Error:</strong>
             <span className="block sm:inline"> {errorPassword}</span>
           </div>
         )}
