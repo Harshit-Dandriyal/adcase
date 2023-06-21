@@ -31,7 +31,7 @@ export const AuthenticationProvider = ({ children }) => {
 
     try {
       const { data: accessResponse } = await axios.post(
-        "http://localhost:3000/api/login",
+        "https://adcasa.vercel.app/api/login",
         body,
         config
       );
@@ -86,7 +86,7 @@ export const AuthenticationProvider = ({ children }) => {
       // call nextjs api function to create a user
 
       const response = await axios.post(
-        "http://localhost:3000/api/signup",
+        "https://adcasa.vercel.app/api/signup",
         body,
         config
       );
