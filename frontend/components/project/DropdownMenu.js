@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 // Import your loading spinner component
 import Spinner from "../Spinner";
+import Cookies from "js-cookie";
 
 const DropdownMenu = ({ categories }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ const DropdownMenu = ({ categories }) => {
   }, [router]);
 
   const handleRouteChange = (id) => {
-    localStorage.setItem("projectId", id);
+    Cookies.set("projectId", id);
     router.push(`/campaign/${id}`);
   };
 

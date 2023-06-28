@@ -27,7 +27,7 @@ const AddNewProject = ({ projectModal, setProjectModal }) => {
 
     try {
       const response = await axios.post(
-        "https://resonant-petal-379617.ew.r.appspot.com/campaign/create-user-project/",
+        "https://resonant-petal-379617.ew.r.appspot.com/project/create/",
         postData,
         config
       );

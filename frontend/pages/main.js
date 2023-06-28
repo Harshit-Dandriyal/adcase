@@ -48,7 +48,12 @@ const page = ({ categories }) => {
         <div className="flex h-[90%] w-full justify-end items-center flex-row">
           <div className="flex w-[80%] h-full flex-col">
             <div className="flex h-[8%] w-[100%] pl-[2%] bg-[#191e24] gap-6 items-center">
-              <button className="flex h-8 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-28 text-sm">
+              <button
+                className="flex h-8 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-28 text-sm"
+                onClick={() => {
+                  setProjectModal(!projectModal);
+                }}
+              >
                 + Add Project
               </button>
               <button className="flex h-8 bg-gray-500  justify-center items-center text-white rounded-full border-2 border-white  w-24 text-sm">
@@ -129,7 +134,7 @@ export async function getServerSideProps(context) {
   };
 
   const url1 =
-    "https://resonant-petal-379617.ew.r.appspot.com/campaign/get-user-projects/";
+    "https://resonant-petal-379617.ew.r.appspot.com/project/get-projects/";
   const url2 = id
     ? `https://resonant-petal-379617.ew.r.appspot.com/campaign/${id}/get-campaigns`
     : null;

@@ -2,12 +2,47 @@ import Image from "next/image";
 import React, { useState } from "react";
 import CampaignHeader from "../../components/campaign/CampaignHeader";
 import CampaignColumn from "../../components/campaign/CampaignColumn";
+import Cookies from "js-cookie";
 import cookie from "next-cookies";
 import axios from "axios";
 import CampaignSidebar from "../../components/campaign/CampaignSidebar";
 import AddNewProject from "../../components/AddNewProject";
-const CategoryPage = ({ categories, campaigns, keywords }) => {
-  const projectId = localStorage.getItem("projectId");
+import { useRouter } from "next/router";
+const CategoryPage = ({ categories, campaigns, keywords, projectId }) => {
+  const [title, setTitle] = useState();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { id } = router.query;
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const access = Cookies.get("access");
+    console.log("san" + access);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + access,
+      },
+    };
+
+    const postData = {
+      title: title,
+    };
+
+    try {
+      const response = await axios.post(
+        `https://resonant-petal-379617.ew.r.appspot.com/campaign/${id}/create/`,
+        postData,
+        config
+      );
+      console.log("Success:", response);
+      setLoading(false);
+      window.location.reload();
+      // After the project is successfully created, you can redirect to another page or give a success message.
+    } catch (error) {
+      console.error("Error:", error);
+      setLoading(false);
+    }
+  };
   return (
     <div className=" h-[100vh] flex ">
       <CampaignSidebar categories={categories} campaigns={campaigns} />
@@ -48,9 +83,45 @@ const CategoryPage = ({ categories, campaigns, keywords }) => {
         <div className="flex h-[90%] w-full justify-end items-center flex-row">
           <div className="flex w-[80%] h-full flex-col">
             <div className="flex h-[12%] w-[100%] pl-[2%] bg-[#191e24] gap-6 items-center">
-              <button className="flex h-8 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-28 text-sm">
-                + Add Project
+              <button
+                className="flex h-8 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-28 text-sm"
+                onClick={() => window.my_modal_1.showModal()}
+              >
+                + Add Campaign
               </button>
+              <dialog id="my_modal_1" className="modal">
+                <form
+                  method="dialog"
+                  className="modal-box flex justify-center flex-col"
+                >
+                  <h3 className="font-bold text-lg">Add Campaign</h3>
+                  <div className="flex items-center flex-col border-none mt-5">
+                    <input
+                      id="email"
+                      name="email"
+                      type="text"
+                      value={title}
+                      className="w-64 h-12 m-3 text-center placeholder-white border border-white bg-[#212121]"
+                      placeholder="Title"
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex justify-center border-none">
+                    <button
+                      className="btn bg-slate-700 hover:bg-slate-800 w-44"
+                      onClick={submitHandler}
+                      disabled={loading}
+                    >
+                      + Add
+                    </button>
+                  </div>
+                  <div className="modal-action border-none">
+                    {/* if there is a button in form, it will close the modal */}
+
+                    <button className="btn">Close</button>
+                  </div>
+                </form>
+              </dialog>
               <button className="flex h-8 bg-gray-500  justify-center items-center text-white rounded-full border-2 border-white  w-24 text-sm">
                 ± Duplicate
               </button>
@@ -82,7 +153,10 @@ export default CategoryPage;
 
 export async function getServerSideProps(context) {
   // Get the token from the cookie
+
   const { access } = cookie(context);
+  const cookies = cookie(context);
+  const projectId = cookies.projectId;
 
   // Determine the value of `id` here. In this example, let's say `id` comes from the request params
   const id = context.params ? context.params.id : null; // Replace with the correct logic to obtain `id`
@@ -97,7 +171,7 @@ export async function getServerSideProps(context) {
   const url1 =
     "https://resonant-petal-379617.ew.r.appspot.com/campaign/get-user-projects/";
   const url2 = id
-    ? `https://resonant-petal-379617.ew.r.appspot.com/campaign/${id}/get-campaigns`
+    ? `https://resonant-petal-379617.ew.r.appspot.com/campaign/${id}/get-campaigns?limit=200`
     : null;
   const url3 = id
     ? `https://resonant-petal-379617.ew.r.appspot.com/campaign/${id}/get-kewords`
@@ -152,6 +226,7 @@ export async function getServerSideProps(context) {
       keywords: data3 ? data3.results : [],
       // postResponse: postDataResponse, // You may need to adjust this based on the response structure of your POST request
       groups: data5 ? data5.results : [],
+      projectId: projectId,
     },
   };
 }
