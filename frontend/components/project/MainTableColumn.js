@@ -144,12 +144,13 @@ const MainTableColumn = ({ category }) => {
             </div>
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[10000] bg-base-100 rounded-box ">
-            <div className="  right-[15%] bottom-[50%] z-40 flex border-none h-5 justify-center items-center">
+            <div className="  right-[15%] bottom-[50%] z-40 flex border-none h-5 justify-center items-center gap-5 px-3">
               <li>
                 <button
                   onClick={() => {
                     submitDuplicateHandler(category.id);
                   }}
+                  className=" text-base font-bold"
                 >
                   <a>Duplicate</a>
                 </button>
@@ -196,6 +197,7 @@ const MainTableColumn = ({ category }) => {
                   onClick={() => {
                     submitDeleteHandler(category.id);
                   }}
+                  className=" text-base font-bold"
                 >
                   <a>Delete</a>
                 </button>

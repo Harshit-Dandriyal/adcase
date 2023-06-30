@@ -113,9 +113,10 @@ const PageComponent = ({ group, openModal, closeModal }) => {
             </div>
           </summary>
           <ul className="p-2 shadow menu dropdown-content z-[10000] bg-base-100 rounded-box ">
-            <div className="  right-[15%] bottom-[50%] z-40 flex border-none h-5 justify-center items-center">
+            <div className="  right-[15%] bottom-[50%] z-40 flex border-none h-5 justify-center items-center gap-5 px-3">
               <li>
                 <button
+                  className=" text-base font-bold"
                   onClick={() => {
                     submitDuplicateHandler(group.id);
                   }}
@@ -124,13 +125,14 @@ const PageComponent = ({ group, openModal, closeModal }) => {
                 </button>
               </li>
               <li>
-                <button onClick={openModal}>
+                <button onClick={openModal} className=" text-base font-bold">
                   <a>Update</a>
                 </button>
               </li>
 
               <li>
                 <button
+                  className=" text-base font-bold"
                   onClick={() => {
                     submitDeleteHandler(group.id);
                   }}
