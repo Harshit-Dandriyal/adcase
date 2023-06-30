@@ -15,14 +15,17 @@
     "@material-ui/icons": "^4.11.2",
     "autoprefixer": "^10.4.14",
     "axios": "^0.21.4",
+    "bootstrap": "^4.6.0",
     "cookie": "^0.4.2",
     "js-cookie": "^3.0.5",
     "next": "11.1.0",
     "next-cookies": "^2.0.3",
     "postcss": "^8.4.24",
     "react": "17.0.2",
+    "react-bootstrap": "^2.8.0",
     "react-dom": "17.0.2",
-    "react-icons": "^4.9.0"
+    "react-icons": "^4.9.0",
+    "react-modal": "^3.16.1"
   },
   "devDependencies": {
     "daisyui": "^3.1.0",

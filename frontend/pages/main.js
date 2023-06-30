@@ -6,42 +6,56 @@ import cookie from "next-cookies";
 import axios from "axios";
 import AddNewProject from "../components/AddNewProject";
 import withAuth from "../hoc/main";
+import { useRouter } from "next/router";
+import { BackSVG } from "../components/Back";
+
 const page = ({ categories }) => {
   const [projectModal, setProjectModal] = useState(true);
+  const router = useRouter();
   return (
     <div className=" h-[100vh] flex ">
       <Sidebar categories={categories} />
 
       <div className="w-5/6 flex flex-col">
-        <div className="flex h-[10%] w-[97%] justify-end items-center gap-5 mr-5">
+        <div className="flex h-[10%] w-[97%] justify-between items-center gap-5 mr-5">
           <button
-            className="flex h-10 bg-green-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
-            onClick={() => {
-              setProjectModal(!projectModal);
-            }}
+            className="w-14"
+            onClick={() => router.back()}
+            aria-label="Go back"
           >
-            + Create new project
+            <BackSVG />
           </button>
-          <div className="dropdown dropdown-bottom dropdown-end">
-            <label tabIndex={0} className=" m-1 p-0 block"></label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+          <div className="border-none flex gap-9">
+            <button
+              className="flex h-10 bg-green-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
+              onClick={() => {
+                setProjectModal(!projectModal);
+              }}
             >
-              <li>
-                <a>Email address</a>
-                <p className="mt-1"> example@gmail.com</p>
-              </li>
-              <li>
-                <a>Dashboard</a>
-              </li>
-              <li>
-                <a>Setting</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
+              + Create new project
+            </button>
+
+            <div className="dropdown dropdown-bottom dropdown-end">
+              <label tabIndex={0} className=" m-1 p-0 block"></label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <a>Email address</a>
+                  <p className="mt-1"> example@gmail.com</p>
+                </li>
+                <li>
+                  <a>Dashboard</a>
+                </li>
+                <li>
+                  <a>Setting</a>
+                </li>
+                <li>
+                  <a>Logout</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 

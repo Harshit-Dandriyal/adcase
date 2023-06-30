@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 import cookie from "next-cookies";
 import axios from "axios";
@@ -8,6 +8,7 @@ import KeyWordHeader from "../../components/keywords/KeywordHeader";
 import KeyWordColumn from "../../components/keywords/KeywordColumn";
 import AddNewProject from "../../components/AddNewProject";
 import { useRouter } from "next/router";
+import { BackSVG } from "../../components/Back";
 const KeyWordPage = ({ categories, campaigns, keywords, projectId }) => {
   const [projectModal, setProjectModal] = useState(true);
   const [title, setTitle] = useState();
@@ -15,7 +16,12 @@ const KeyWordPage = ({ categories, campaigns, keywords, projectId }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { id } = router.query;
+  const dialogRef = useRef();
 
+  useEffect(() => {
+    // associate the dialog reference with window.my_modal_2
+    window.my_modal_2 = dialogRef.current;
+  }, []);
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -52,38 +58,46 @@ const KeyWordPage = ({ categories, campaigns, keywords, projectId }) => {
     <div className=" h-[100vh] flex ">
       <KeyWordSidebar categories={categories} keywords={keywords} />
       <div className="w-5/6 flex flex-col">
-        <div className="flex h-[10%] w-[97%] justify-end items-center gap-5 mr-5">
+        <div className="flex h-[10%] w-[97%] justify-between items-center gap-5 mr-5">
           <button
-            className="flex h-10 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
-            onClick={() => {
-              window.location.href = `https://resonant-petal-379617.ew.r.appspot.com/exporter/get-csv/?site_id=${projectId}`;
-            }}
+            className="w-14"
+            onClick={() => router.back()}
+            aria-label="Go back"
           >
-            Download .csv
+            <BackSVG />
           </button>
-          <div className="dropdown dropdown-bottom dropdown-end">
-            <label tabIndex={0} className=" m-1 p-0 block"></label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+          <div className="border-none flex gap-9">
+            <button
+              className="flex h-10 bg-gray-500 justify-center items-center text-white rounded-full border-2 border-white  w-44"
+              onClick={() => {
+                window.location.href = `https://resonant-petal-379617.ew.r.appspot.com/exporter/get-csv/?site_id=${projectId}`;
+              }}
             >
-              <li>
-                <a>Email address</a>
-                <p className="mt-1"> example@gmail.com</p>
-              </li>
-              <li>
-                <a>Dashboard</a>
-              </li>
-              <li>
-                <a>Setting</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
+              Download .csv
+            </button>
+            <div className="dropdown dropdown-bottom dropdown-end">
+              <label tabIndex={0} className=" m-1 p-0 block"></label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <a>Email address</a>
+                  <p className="mt-1"> example@gmail.com</p>
+                </li>
+                <li>
+                  <a>Dashboard</a>
+                </li>
+                <li>
+                  <a>Setting</a>
+                </li>
+                <li>
+                  <a>Logout</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-
         <div className="flex h-[90%] w-full justify-end items-center flex-row">
           <div className="flex w-[80%] h-full flex-col">
             <div className="flex h-[8%] w-[100%] pl-[2%] bg-[#191e24] gap-6 items-center">
@@ -93,7 +107,7 @@ const KeyWordPage = ({ categories, campaigns, keywords, projectId }) => {
               >
                 + Add Keyword
               </button>
-              <dialog id="my_modal_1" className="modal">
+              <dialog ref={dialogRef} id="my_modal_1" className="modal">
                 <form
                   method="dialog"
                   className="modal-box flex justify-center flex-col"
