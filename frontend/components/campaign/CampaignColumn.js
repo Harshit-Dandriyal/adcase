@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import Modal from "react-modal";
 
-const CampaignColumn = ({ campaign }) => {
+const PageComponent = ({ campaign, openModal, closeModal }) => {
   const [title, setTitle] = useState("");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const menuRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  useEffect(() => {
-    Modal.setAppElement("#__next"); // Use `#__next` for Next.js
-  }, []);
   const toggleMenu = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -50,31 +45,7 @@ const CampaignColumn = ({ campaign }) => {
       console.error("Error:", error);
     }
   };
-  const submitUpdateHandler = async (campaign_id) => {
-    const access = Cookies.get("access");
-    console.log("san" + access);
-    const postData = {
-      title: title,
-    };
 
-    const config = {
-      headers: {
-        Authorization: "Bearer " + access,
-      },
-    };
-
-    try {
-      const response = await axios.put(
-        `https://resonant-petal-379617.ew.r.appspot.com/campaign/campaign/${campaign_id}/update/`,
-        postData,
-        config
-      );
-      window.location.reload();
-      // After the project is successfully created, you can redirect to another page or give a success message.
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
   const submitDuplicateHandler = async (campaign_id) => {
     const access = Cookies.get("access");
     const config = {
@@ -95,16 +66,16 @@ const CampaignColumn = ({ campaign }) => {
     }
   };
 
-  const CdialogRef = useRef(null);
+  const aDdialogRef = React.createRef();
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (aDdialogRef.current) {
+  //       aDdialogRef.current.showModal();
+  //     }
+  //   }, 0); // defer execution to next event loop
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setTitle(campaign.title); // Set the input field's value to the current campaign title
-    setModalIsOpen(true);
-  };
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
+  //   return () => clearTimeout(timer); // cleanup function
+  // }, []);
   return (
     <div className="flex h-[40px] w-full justify-around items-center">
       <p className="m-0  text-white border border-gray-500 w-1/3 h-full pt-1 text-center">
@@ -116,21 +87,36 @@ const CampaignColumn = ({ campaign }) => {
       <p className="m-0 text-white border border-gray-500 w-1/3 h-full pt-1 text-center">
         {campaign.num_keywords}
       </p>
-      <ul
-        tabIndex={0}
-        class="menu lg:menu-vertical bg-base-200 rounded-box w-14 flex justify-center items-center "
-      >
-        <li className="flex justify-center ">
-          <details
-            open={menuOpen}
-            ref={menuRef}
-            onToggle={(event) => event.preventDefault()}
-            onClick={toggleMenu}
-            className=""
-          >
-            <summary tabindex="0"></summary>
-
-            <div className=" overflow-clip bg-slate-900 right-[15%] bottom-[50%] z-40 absolute">
+      <li className="flex justify-center relative z-50">
+        <details
+          open={menuOpen}
+          ref={menuRef}
+          onToggle={(event) => event.preventDefault()}
+          onClick={toggleMenu}
+          className="dropdown z-50 dropdown-left myDetails"
+        >
+          <summary className="flex">
+            <div className="border-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className={`h-6 w-6 transform transition-transform duration-200 ${
+                  menuOpen ? "rotate-90" : ""
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </summary>
+          <ul className="p-2 shadow menu dropdown-content z-[10000] bg-base-100 rounded-box ">
+            <div className="  right-[15%] bottom-[50%] z-40 flex border-none h-5 justify-center items-center">
               <li>
                 <button
                   onClick={() => {
@@ -140,44 +126,11 @@ const CampaignColumn = ({ campaign }) => {
                   <a>Duplicate</a>
                 </button>
               </li>
-              <button
-                className="btn"
-                onClick={() => window.my_modal_1.showModal()}
-              >
-                open modal
-              </button>
-              <dialog id="my_modal_1" className="modal" open={modalIsOpen}>
-                <form className="modal-box flex justify-center flex-col">
-                  <h3 className="font-bold text-lg">Update Project</h3>
-                  <div className="flex items-center flex-col border-none mt-5">
-                    <input
-                      id="email"
-                      name="email"
-                      type="text"
-                      value={title}
-                      className="w-64 h-12 m-3 text-center placeholder-white border border-white bg-[#212121]"
-                      placeholder="Title"
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </div>
-                  <div className="flex justify-center border-none">
-                    <button
-                      className="btn bg-slate-700 hover:bg-slate-800 w-44"
-                      onClick={() => {
-                        submitUpdateHandler(campaign.id);
-                        closeModal();
-                      }}
-                    >
-                      Update Campaign
-                    </button>
-                  </div>
-                  <div className="modal-action border-none">
-                    <button className="btn" onClick={closeModal}>
-                      Close
-                    </button>
-                  </div>
-                </form>
-              </dialog>
+              <li>
+                <button onClick={openModal}>
+                  <a>Update</a>
+                </button>
+              </li>
 
               <li>
                 <button
@@ -189,10 +142,104 @@ const CampaignColumn = ({ campaign }) => {
                 </button>
               </li>
             </div>
-          </details>
-        </li>
-      </ul>
+          </ul>
+        </details>
+      </li>
     </div>
+  );
+};
+
+const CampaignColumn = ({ campaign }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const aDdialogRef = useRef(null);
+  const [title, setTitle] = useState("");
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (aDdialogRef.current) {
+  //       aDdialogRef.current.showModal();
+  //     }
+  //   }, 0); // defer execution to next event loop
+
+  //   return () => clearTimeout(timer); // cleanup function
+  // }, [modalIsOpen]);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+  const submitUpdateHandler = async (campaign_id) => {
+    const access = Cookies.get("access");
+    console.log("san" + access);
+    const postData = {
+      title: title,
+    };
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + access,
+      },
+    };
+
+    try {
+      const response = await axios.put(
+        `https://resonant-petal-379617.ew.r.appspot.com/campaign/${campaign_id}/update/`,
+        postData,
+        config
+      );
+      window.location.reload();
+      // After the project is successfully created, you can redirect to another page or give a success message.
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  return (
+    <>
+      <PageComponent
+        openModal={openModal}
+        closeModal={closeModal}
+        campaign={campaign}
+      />
+      <dialog
+        id="my_modal_1"
+        className="modal fixed inset-0 flex items-center justify-center z-50"
+        open={modalIsOpen}
+        ref={aDdialogRef}
+      >
+        <form method="dialog" className="modal-box">
+          <h3 className="font-bold text-lg">Update Project</h3>
+          <div className="flex items-center flex-col border-none mt-5">
+            <input
+              id="email"
+              name="email"
+              type="text"
+              value={title}
+              className="w-64 h-12 m-3 text-center placeholder-white border border-white bg-[#212121]"
+              placeholder="Title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="flex justify-center border-none">
+            <button
+              className="btn bg-slate-700 hover:bg-slate-800 w-44"
+              onClick={() => {
+                submitUpdateHandler(campaign.id);
+                closeModal();
+              }}
+            >
+              Update Group
+            </button>
+          </div>
+          <div className="modal-action border-none">
+            <button className="btn" onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </>
   );
 };
 

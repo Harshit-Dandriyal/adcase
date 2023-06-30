@@ -51,3 +51,11 @@ div {
     border: 1px solid grey;
     font-family: sans-serif;
 }
+
+details summary {
+    list-style: none;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}

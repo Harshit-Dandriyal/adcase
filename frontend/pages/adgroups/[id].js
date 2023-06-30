@@ -48,15 +48,6 @@ const AdGroupPage = ({ categories, groups, keywords, projectId }) => {
   };
   const dialogRef = React.createRef();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (dialogRef.current) {
-        dialogRef.current.showModal();
-      }
-    }, 0); // defer execution to next event loop
-
-    return () => clearTimeout(timer); // cleanup function
-  }, []);
   return (
     <div className=" h-[100vh] flex ">
       <AdGroupSidebar categories={categories} groups={groups} />
@@ -155,7 +146,7 @@ const AdGroupPage = ({ categories, groups, keywords, projectId }) => {
             {projectModal ? (
               <>
                 <AdGroupHeader />
-                <div className="flex h-[89%] w-full flex-col overflow-y-scroll">
+                <div className="flex h-[89%] w-full flex-col overflow-y-scroll overflow-x-hidden">
                   <div className="flex flex-col">
                     {groups.map((group) => (
                       <>

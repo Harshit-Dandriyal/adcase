@@ -81,7 +81,7 @@ const page = ({ categories }) => {
               <>
                 <TableHeader />
                 <div className="flex h-[89%] w-full flex-col ">
-                  <div className="flex h-[60%] flex-col overflow-y-scroll">
+                  <div className="flex h-[60%] flex-col overflow-y-scroll overflow-x-hidden">
                     {categories.map((category) => (
                       <>
                         <MainTableColumn category={category} />

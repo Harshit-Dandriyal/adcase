@@ -114,21 +114,37 @@ const MainTableColumn = ({ category }) => {
       <p className="m-0 text-white border border-gray-500 w-1/4 h-full pt-1 text-center">
         {category.num_keywords}
       </p>
-      <ul
-        tabIndex={0}
-        class="menu lg:menu-vertical bg-base-200 rounded-box w-14 flex justify-center items-center "
-      >
-        <li className="flex justify-center ">
-          <details
-            open={menuOpen}
-            ref={menuRef}
-            onToggle={(event) => event.preventDefault()}
-            onClick={toggleMenu}
-            className=""
-          >
-            <summary tabindex="0"></summary>
 
-            <div className=" overflow-clip bg-slate-900 right-[15%] bottom-[50%] z-40 absolute">
+      <li className="flex justify-center relative z-50">
+        <details
+          open={menuOpen}
+          ref={menuRef}
+          onToggle={(event) => event.preventDefault()}
+          onClick={toggleMenu}
+          className="dropdown z-50 dropdown-left myDetails"
+        >
+          <summary className="flex">
+            <div className="border-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className={`h-6 w-6 transform transition-transform duration-200 ${
+                  menuOpen ? "rotate-90" : ""
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </summary>
+          <ul className="p-2 shadow menu dropdown-content z-[10000] bg-base-100 rounded-box ">
+            <div className="  right-[15%] bottom-[50%] z-40 flex border-none h-5 justify-center items-center">
               <li>
                 <button
                   onClick={() => {
@@ -185,9 +201,9 @@ const MainTableColumn = ({ category }) => {
                 </button>
               </li>
             </div>
-          </details>
-        </li>
-      </ul>
+          </ul>
+        </details>
+      </li>
     </div>
   );
 };
